@@ -3,205 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BangFai Dynamics | ศูนย์การเรียนรู้วิทยาศาสตร์บั้งไฟ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>AeroBangFai Dynamics | ระบบประเมินเพดานบิน</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* ตั้งค่าพื้นฐานและการจัดระยะฟอนต์ให้พอดี */
         :root {
-            --primary-color: #00e5ff;
-            --bg-color: #0a0e17;
-            --card-bg: #111827;
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --primary-color: #0A84FF;
+            --text-main: #1C1C1E;
+            --text-sub: #8E8E93;
+            --bg-color: #FFFFFF;
+            --card-bg: #F2F2F7;
         }
 
         body {
             font-family: 'Prompt', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
-            letter-spacing: 0px; /* ป้องกันไม่ให้ตัวอักษรห่างกัน */
-            word-spacing: normal;
-            -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.4;
+            /* ควบคุมไม่ให้ฟอนต์ห่างเกินไป */
+            letter-spacing: 0.2px; 
         }
 
-        /* ส่วนหัวเว็บไซต์ (Header) */
+        /* กล่องหลักที่จำกัดความกว้างให้พอดีกับโทรศัพท์มือถือ */
+        .mobile-container {
+            width: 100%;
+            max-width: 430px; 
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
         header {
-            background-color: rgba(10, 14, 23, 0.9);
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 1rem 2rem;
-            border-bottom: 1px solid #1f2937;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* ส่วน Hero (แบนเนอร์หลัก) */
-        .hero {
-            padding: 4rem 2rem;
             text-align: center;
-            background: linear-gradient(180deg, rgba(0,229,255,0.05) 0%, rgba(10,14,23,1) 100%);
+            margin-bottom: 32px;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
+        h1 {
+            font-size: 24px;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: #ffffff;
-            line-height: 1.2;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
+        p.subtitle {
+            font-size: 14px;
+            color: var(--text-sub);
             font-weight: 300;
+            margin: 0;
         }
 
-        /* โครงสร้างเนื้อหา */
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
+        .control-panel {
+            background-color: var(--bg-color);
+            border: 1px solid #E5E5EA;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title::before {
-            content: "";
+        label {
             display: block;
-            width: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* ตกแต่งแถบเลื่อน (Slider) ให้ดูไฮเทค */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
             height: 24px;
-            background-color: var(--primary-color);
+            width: 24px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 6px rgba(10, 132, 255, 0.4);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            cursor: pointer;
+            background: #E5E5EA;
             border-radius: 4px;
         }
 
-        /* การ์ดเนื้อหา */
-        .card {
-            background-color: var(--card-bg);
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .input-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            font-size: 14px;
+            color: var(--text-sub);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.1);
-            border-color: #374151;
-        }
-
-        .card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: #ffffff;
+        .input-value {
+            font-size: 20px;
             font-weight: 600;
+            color: var(--primary-color);
         }
 
-        .card p {
-            font-weight: 300;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
+        .result-panel {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
         }
 
-        /* ส่วนท้ายเว็บไซต์ */
+        .result-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-sub);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .height-display {
+            font-size: 48px;
+            font-weight: 600;
+            margin: 8px 0;
+            color: var(--text-main);
+            letter-spacing: -1px;
+        }
+
+        .height-unit {
+            font-size: 16px;
+            color: var(--text-sub);
+            font-weight: 400;
+        }
+
+        .comparison-box {
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-main);
+            border: 1px solid #E5E5EA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
         footer {
             text-align: center;
-            padding: 2rem;
-            border-top: 1px solid #1f2937;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            margin-top: 2rem;
-        }
-
-        /* การรองรับหน้าจอโทรศัพท์ (Responsive) */
-        @media (max-width: 600px) {
-            .hero {
-                padding: 3rem 1rem;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .container {
-                padding: 1rem;
-            }
-            header {
-                padding: 1rem;
-            }
+            margin-top: 32px;
+            font-size: 11px;
+            color: #C7C7CC;
+            font-weight: 300;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">BangFai Dynamics</div>
-    </header>
+    <div class="mobile-container">
+        <header>
+            <h1>AeroBangFai Dynamics</h1>
+            <p class="subtitle">ระบบประเมินประสิทธิภาพและเพดานบินทางวิศวกรรม</p>
+        </header>
 
-    <section class="hero">
-        <h1>นวัตกรรมและภูมิปัญญา</h1>
-        <p>เรียนรู้วิทยาศาสตร์การขับเคลื่อนเบื้องหลัง "บั้งไฟ" ประเพณีไทยที่ผสานหลักการทางฟิสิกส์อากาศยานอย่างลงตัว</p>
-    </section>
-
-    <div class="container">
-        
-        <h2 class="section-title">หลักการทางวิทยาศาสตร์</h2>
-        
-        <div class="card">
-            <h3>กฎการเคลื่อนที่ข้อที่ 3 ของนิวตัน</h3>
-            <p>กลไกหลักที่ทำให้บั้งไฟพุ่งทะยานขึ้นสู่ท้องฟ้าคือ "แรงกิริยาเท่ากับแรงปฏิกิริยา" (Action = Reaction) เมื่อเชื้อเพลิงภายในถูกเผาไหม้ จะเกิดก๊าซความดันสูงพ่นออกมาทางท้ายท่อ (แรงกิริยา) ส่งผลให้ตัวบั้งไฟถูกผลักไปในทิศทางตรงกันข้าม (แรงปฏิกิริยา) ยิ่งก๊าซพ่นออกมาเร็วและมีมวลมาก บั้งไฟก็จะยิ่งมีแรงขับเคลื่อนสูง</p>
+        <div class="control-panel">
+            <label for="powderMass">กำหนดปริมาณประจุเชื้อเพลิง (ดินปืน)</label>
+            <input type="range" id="powderMass" min="1" max="120" value="10" step="1">
+            
+            <div class="input-display">
+                <span>ปริมาตรมวล:</span>
+                <div>
+                    <span class="input-value" id="massValue">10</span>
+                    <span> กิโลกรัม</span>
+                </div>
+            </div>
         </div>
 
-        <div class="card">
-            <h3>หลักอากาศพลศาสตร์ (Aerodynamics)</h3>
-            <p>การออกแบบรูปร่างของบั้งไฟมีความสำคัญอย่างมากต่อความเสถียรในอากาศ การทำให้ส่วนหัวมีความเพรียวลมจะช่วยลดแรงต้านอากาศ (Drag) ในขณะที่ "หาง" ของบั้งไฟทำหน้าที่เสมือนหางเสือ ช่วยรักษาศูนย์ถ่วงและทิศทางไม่ให้แกว่งไปมาระหว่างที่พุ่งด้วยความเร็วสูง</p>
+        <div class="result-panel">
+            <div class="result-title">ประเมินเพดานบินสูงสุด (Apogee)</div>
+            <div class="height-display">
+                <span id="heightValue">320</span><span class="height-unit"> เมตร</span>
+            </div>
+            
+            <div class="comparison-box">
+                <span id="iconDisplay">🗼</span>
+                <span id="comparisonText">เทียบเท่าความสูง: หอไอเฟล</span>
+            </div>
         </div>
 
-        <h2 class="section-title">ภูมิปัญญาและโครงสร้าง</h2>
-
-        <div class="card">
-            <h3>ส่วนประกอบพื้นฐาน</h3>
-            <p>แม้จะไม่มีระบบคอมพิวเตอร์ช่วยคำนวณ แต่ภูมิปัญญาดั้งเดิมได้ออกแบบองค์ประกอบที่สมบูรณ์แบบ:</p>
-            <ul style="list-style-position: inside; color: var(--text-muted); font-weight: 300;">
-                <li style="margin-bottom: 0.5rem;"><strong>เลาบั้งไฟ:</strong> ทรงกระบอกที่ทนแรงดันสูง มักทำจากไม้ไผ่พลาสติกพีวีซี หรือเหล็กในปัจจุบัน</li>
-                <li style="margin-bottom: 0.5rem;"><strong>เชื้อเพลิง (หมื่อ):</strong> ส่วนผสมดั้งเดิมที่ให้พลังงานในการขับเคลื่อน</li>
-                <li><strong>หาง:</strong> ไม้ไผ่ยาวที่ช่วยรักษาสมดุลขณะเคลื่อนที่</li>
-            </ul>
-        </div>
-
+        <footer>
+            *แบบจำลองนี้อ้างอิงสัดส่วนแรงขับตามทฤษฎีเบื้องต้นเพื่อการศึกษาเท่านั้น<br>ตัวแปรทางอากาศพลศาสตร์และน้ำหนักโครงสร้างถูกปรับให้เข้าใจง่าย
+        </footer>
     </div>
 
-    <footer>
-        &copy; 2026 BangFai Dynamics. โครงการเพื่อการศึกษาวิทยาศาสตร์และศิลปวัฒนธรรม.
-    </footer>
+    <script>
+        // ดึง Element จาก HTML มาใช้งาน
+        const slider = document.getElementById('powderMass');
+        const massValue = document.getElementById('massValue');
+        const heightValue = document.getElementById('heightValue');
+        const comparisonText = document.getElementById('comparisonText');
+        const iconDisplay = document.getElementById('iconDisplay');
 
+        // ฟังก์ชันคำนวณความสูง (ดัดแปลงสมการให้ดูสมจริงแบบจำลองฟิสิกส์ง่ายๆ)
+        function calculateHeight(kg) {
+            // สมมติฐาน: เชื้อเพลิง 1 กิโลกรัม ดันขึ้นไปได้ระดับหนึ่ง โดยมีแรงต้านอากาศเพิ่มขึ้นแบบไม่เป็นเชิงเส้น
+            let rawHeight = (kg * 45) - (Math.pow(kg, 1.25)); 
+            return Math.max(0, Math.round(rawHeight));
+        }
+
+        // ฟังก์ชันเปรียบเทียบสิ่งก่อสร้าง/ระดับความสูง
+        function updateComparison(height) {
+            let text = "";
+            let icon = "";
+
+            if (height < 50) {
+                text = "ต้นไม้ใหญ่ / เสาไฟฟ้าแรงสูง"; icon = "🌳";
+            } else if (height < 150) {
+                text = "ตึกระฟ้าขนาดกลาง (30-40 ชั้น)"; icon = "🏢";
+            } else if (height < 350) {
+                text = "หอไอเฟล (ปารีส)"; icon = "🗼";
+            } else if (height < 600) {
+                text = "ตึกไทเป 101"; icon = "🏙️";
+            } else if (height < 900) {
+                text = "ตึกเบิร์จคาลิฟา (สูงที่สุดในโลก)"; icon = "🏙️";
+            } else if (height < 1500) {
+                text = "ยอดเขาดอยอินทนนท์ (ระดับน้ำทะเล)"; icon = "⛰️";
+            } else if (height < 3000) {
+                text = "ระดับฐานเมฆชั้นต่ำ"; icon = "☁️";
+            } else {
+                text = "ระดับเพดานบินเครื่องบินพาณิชย์ขนาดเล็ก"; icon = "✈️";
+            }
+
+            comparisonText.innerText = "เทียบเท่า: " + text;
+            iconDisplay.innerText = icon;
+        }
+
+        // ฟังก์ชันอัปเดตหน้าจอเมื่อผู้ใช้เลื่อน Slider
+        function updateUI() {
+            let kg = parseFloat(slider.value);
+            massValue.innerText = kg;
+            
+            let estimatedHeight = calculateHeight(kg);
+            // ใส่ลูกน้ำ (Comma) ให้ตัวเลขดูเป็นมืออาชีพ
+            heightValue.innerText = estimatedHeight.toLocaleString();
+            
+            updateComparison(estimatedHeight);
+        }
+
+        // ดักจับเหตุการณ์เมื่อมีการเลื่อน Slider
+        slider.addEventListener('input', updateUI);
+
+        // รันครั้งแรกตอนเปิดหน้าเว็บ
+        updateUI();
+    </script>
 </body>
 </html>
