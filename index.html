@@ -12,6 +12,7 @@
             --text-sub: #8E8E93;
             --bg-color: #FFFFFF;
             --card-bg: #F2F2F7;
+            --border-color: #E5E5EA;
         }
 
         body {
@@ -22,18 +23,16 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* เปลี่ยนเป็น flex-start เพื่อให้เลื่อนจอได้เมื่อเนื้อหายาวขึ้น */
             min-height: 100vh;
-            line-height: 1.4;
-            /* ควบคุมไม่ให้ฟอนต์ห่างเกินไป */
+            line-height: 1.5;
             letter-spacing: 0.2px; 
         }
 
-        /* กล่องหลักที่จำกัดความกว้างให้พอดีกับโทรศัพท์มือถือ */
         .mobile-container {
             width: 100%;
             max-width: 430px; 
-            padding: 24px;
+            padding: 32px 24px;
             box-sizing: border-box;
         }
 
@@ -56,13 +55,14 @@
             margin: 0;
         }
 
-        .control-panel {
+        /* --- ส่วนของเกมจำลอง --- */
+        .simulator-section {
             background-color: var(--bg-color);
-            border: 1px solid #E5E5EA;
+            border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 24px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
-            margin-bottom: 24px;
+            margin-bottom: 32px;
         }
 
         label {
@@ -72,7 +72,6 @@
             margin-bottom: 16px;
         }
 
-        /* ตกแต่งแถบเลื่อน (Slider) ให้ดูไฮเทค */
         input[type=range] {
             -webkit-appearance: none;
             width: 100%;
@@ -81,20 +80,20 @@
 
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 24px;
-            width: 24px;
+            height: 28px;
+            width: 28px;
             border-radius: 50%;
             background: var(--primary-color);
             cursor: pointer;
-            margin-top: -8px;
-            box-shadow: 0 2px 6px rgba(10, 132, 255, 0.4);
+            margin-top: -10px;
+            box-shadow: 0 2px 8px rgba(10, 132, 255, 0.4);
         }
 
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%;
             height: 8px;
             cursor: pointer;
-            background: #E5E5EA;
+            background: var(--border-color);
             border-radius: 4px;
         }
 
@@ -115,9 +114,10 @@
 
         .result-panel {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 24px;
             text-align: center;
+            margin-top: 24px;
         }
 
         .result-title {
@@ -129,7 +129,7 @@
         }
 
         .height-display {
-            font-size: 48px;
+            font-size: 42px;
             font-weight: 600;
             margin: 8px 0;
             color: var(--text-main);
@@ -144,22 +144,89 @@
 
         .comparison-box {
             background-color: var(--bg-color);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 8px;
+            padding: 12px;
             margin-top: 16px;
             font-size: 14px;
             font-weight: 400;
             color: var(--text-main);
-            border: 1px solid #E5E5EA;
+            border: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
+        /* --- ส่วนของฐานความรู้ (Knowledge Base) --- */
+        .knowledge-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+
+        details {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        summary {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 16px;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 18px;
+            color: var(--primary-color);
+            font-weight: 400;
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        .knowledge-content {
+            padding: 16px;
+            font-size: 13.5px;
+            color: #3A3A3C;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .knowledge-content ul {
+            padding-left: 20px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .knowledge-content li {
+            margin-bottom: 6px;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
         footer {
             text-align: center;
-            margin-top: 32px;
+            margin-top: 40px;
+            margin-bottom: 24px;
             font-size: 11px;
             color: #C7C7CC;
             font-weight: 300;
@@ -171,97 +238,120 @@
     <div class="mobile-container">
         <header>
             <h1>AeroBangFai Dynamics</h1>
-            <p class="subtitle">ระบบประเมินประสิทธิภาพและเพดานบินทางวิศวกรรม</p>
+            <p class="subtitle">จำลองเพดานบินและฐานข้อมูลวิศวกรรมพื้นบ้าน</p>
         </header>
 
-        <div class="control-panel">
-            <label for="powderMass">กำหนดปริมาณประจุเชื้อเพลิง (ดินปืน)</label>
-            <input type="range" id="powderMass" min="1" max="120" value="10" step="1">
+        <div class="simulator-section">
+            <label for="powderMass">กำหนดปริมาณเชื้อเพลิง (กิโลกรัม)</label>
+            <input type="range" id="powderMass" min="1" max="150" value="15" step="1">
             
             <div class="input-display">
-                <span>ปริมาตรมวล:</span>
+                <span>ปริมาตรมวลประจุ:</span>
                 <div>
-                    <span class="input-value" id="massValue">10</span>
-                    <span> กิโลกรัม</span>
+                    <span class="input-value" id="massValue">15</span>
+                    <span> กก.</span>
+                </div>
+            </div>
+
+            <div class="result-panel">
+                <div class="result-title">ประเมินเพดานบินสูงสุด (Apogee)</div>
+                <div class="height-display">
+                    <span id="heightValue">0</span><span class="height-unit"> เมตร</span>
+                </div>
+                
+                <div class="comparison-box">
+                    <span id="iconDisplay">🗼</span>
+                    <span id="comparisonText">กำลังคำนวณ...</span>
                 </div>
             </div>
         </div>
 
-        <div class="result-panel">
-            <div class="result-title">ประเมินเพดานบินสูงสุด (Apogee)</div>
-            <div class="height-display">
-                <span id="heightValue">320</span><span class="height-unit"> เมตร</span>
+        <div class="knowledge-header">ฐานข้อมูลภารกิจ (Mission Briefing)</div>
+
+        <details>
+            <summary>🚀 บั้งไฟพุ่งขึ้นฟ้าได้อย่างไร?</summary>
+            <div class="knowledge-content">
+                บั้งไฟทำงานด้วย <b>"กฎการเคลื่อนที่ข้อที่ 3 ของนิวตัน"</b> (Action = Reaction) 
+                <br><br>
+                เมื่อจุดไฟเผาประจุเชื้อเพลิง จะเกิดก๊าซมหาศาลและความร้อนสูงดันตัวอยู่ภายในท่อ ก๊าซเหล่านี้ต้องการหาที่ระบาย จึงพ่นออกทางท้ายกระบอกด้วยความเร็วสูงมาก (แรงกิริยา) ส่งผลให้เกิด <b>"แรงปฏิกิริยา"</b> ดันตัวกระบอกบั้งไฟให้พุ่งสวนทางทะยานขึ้นสู่ท้องฟ้าเหมือนกับจรวดของยานอวกาศ
             </div>
-            
-            <div class="comparison-box">
-                <span id="iconDisplay">🗼</span>
-                <span id="comparisonText">เทียบเท่าความสูง: หอไอเฟล</span>
+        </details>
+
+        <details>
+            <summary>💥 ประจุดินปืน คืออะไร? ทำมาจากไหน?</summary>
+            <div class="knowledge-content">
+                ประจุเชื้อเพลิง หรือที่เรียกกันว่า "ดินปืน" (Black Powder) เกิดจากการผสมสสาร 3 ชนิดเข้าด้วยกัน ได้แก่:
+                <ul>
+                    <li><span class="highlight">ดินประสิว (Potassium Nitrate):</span> เป็นตัวให้ออกซิเจน ทำให้ไฟลุกไหม้รวดเร็วและรุนแรง สมัยโบราณมักสกัดมาจากขี้ค้างคาวหรือดินตามถ้ำลึก</li>
+                    <li><span class="highlight">ถ่านไม้ (Charcoal):</span> เป็นเชื้อเพลิงหลัก นิยมใช้ไม้เนื้ออ่อนที่ให้ความร้อนสูง เช่น ไม้ฉำฉา หรือไม้เนื้ออ่อนประจำท้องถิ่น</li>
+                    <li><span class="highlight">กำมะถัน (Sulfur):</span> เป็นตัวช่วยเร่งปฏิกิริยา ทำให้ส่วนผสมจุดติดไฟได้ง่ายขึ้นในอุณหภูมิที่ต่ำลง</li>
+                </ul>
             </div>
-        </div>
+        </details>
+
+        <details>
+            <summary>⚙️ กระบวนการอัดประจุ (Propellant Loading)</summary>
+            <div class="knowledge-content">
+                เมื่อนำส่วนผสมทั้ง 3 มาตำและคลุกเคล้ากันในอัตราส่วนลับเฉพาะของแต่ละค่าย (สัดส่วนต่างกัน ให้แรงขับต่างกัน) ช่างจะนำมา <b>"อัดลงในท่อ"</b> (สมัยก่อนใช้กระบอกไม้ไผ่ ปัจจุบันนิยมใช้ท่อ PVC สีฟ้า หรือท่อพลาสติกผสม)
+                <br><br>
+                <b>ข้อควรระวังทางวิศวกรรม:</b> การอัดต้องใช้เครื่องอัดไฮดรอลิกให้แน่นพอดีไร้ช่องอากาศ หากอัดหลวมไปไฟจะลามเร็วเกินจนเกิดการ "ระเบิดคาฐาน" (CATO) แทนที่จะพุ่งขึ้นฟ้า
+            </div>
+        </details>
 
         <footer>
-            *แบบจำลองนี้อ้างอิงสัดส่วนแรงขับตามทฤษฎีเบื้องต้นเพื่อการศึกษาเท่านั้น<br>ตัวแปรทางอากาศพลศาสตร์และน้ำหนักโครงสร้างถูกปรับให้เข้าใจง่าย
+            *โปรแกรมจำลองนี้สร้างขึ้นเพื่อการศึกษาเท่านั้น<br>ตัวเลขคำนวณถูกดัดแปลงให้เป็นเกมเพื่อความเข้าใจง่าย ไม่สามารถใช้อ้างอิงทางวิศวกรรมการบินจริงได้
         </footer>
     </div>
 
     <script>
-        // ดึง Element จาก HTML มาใช้งาน
         const slider = document.getElementById('powderMass');
         const massValue = document.getElementById('massValue');
         const heightValue = document.getElementById('heightValue');
         const comparisonText = document.getElementById('comparisonText');
         const iconDisplay = document.getElementById('iconDisplay');
 
-        // ฟังก์ชันคำนวณความสูง (ดัดแปลงสมการให้ดูสมจริงแบบจำลองฟิสิกส์ง่ายๆ)
         function calculateHeight(kg) {
-            // สมมติฐาน: เชื้อเพลิง 1 กิโลกรัม ดันขึ้นไปได้ระดับหนึ่ง โดยมีแรงต้านอากาศเพิ่มขึ้นแบบไม่เป็นเชิงเส้น
-            let rawHeight = (kg * 45) - (Math.pow(kg, 1.25)); 
+            let rawHeight = (kg * 55) - (Math.pow(kg, 1.3)); 
             return Math.max(0, Math.round(rawHeight));
         }
 
-        // ฟังก์ชันเปรียบเทียบสิ่งก่อสร้าง/ระดับความสูง
         function updateComparison(height) {
             let text = "";
             let icon = "";
 
             if (height < 50) {
-                text = "ต้นไม้ใหญ่ / เสาไฟฟ้าแรงสูง"; icon = "🌳";
+                text = "ต้นไม้ใหญ่ / เสาไฟฟ้า"; icon = "🌳";
             } else if (height < 150) {
-                text = "ตึกระฟ้าขนาดกลาง (30-40 ชั้น)"; icon = "🏢";
+                text = "ตึกระฟ้า 40 ชั้น"; icon = "🏢";
             } else if (height < 350) {
-                text = "หอไอเฟล (ปารีส)"; icon = "🗼";
+                text = "หอไอเฟล"; icon = "🗼";
             } else if (height < 600) {
                 text = "ตึกไทเป 101"; icon = "🏙️";
             } else if (height < 900) {
-                text = "ตึกเบิร์จคาลิฟา (สูงที่สุดในโลก)"; icon = "🏙️";
+                text = "ตึกเบิร์จคาลิฟา"; icon = "🏙️";
             } else if (height < 1500) {
-                text = "ยอดเขาดอยอินทนนท์ (ระดับน้ำทะเล)"; icon = "⛰️";
+                text = "ยอดเขาดอยอินทนนท์"; icon = "⛰️";
             } else if (height < 3000) {
                 text = "ระดับฐานเมฆชั้นต่ำ"; icon = "☁️";
             } else {
-                text = "ระดับเพดานบินเครื่องบินพาณิชย์ขนาดเล็ก"; icon = "✈️";
+                text = "เพดานบินเครื่องบินพาณิชย์"; icon = "✈️";
             }
 
             comparisonText.innerText = "เทียบเท่า: " + text;
             iconDisplay.innerText = icon;
         }
 
-        // ฟังก์ชันอัปเดตหน้าจอเมื่อผู้ใช้เลื่อน Slider
         function updateUI() {
             let kg = parseFloat(slider.value);
             massValue.innerText = kg;
             
             let estimatedHeight = calculateHeight(kg);
-            // ใส่ลูกน้ำ (Comma) ให้ตัวเลขดูเป็นมืออาชีพ
             heightValue.innerText = estimatedHeight.toLocaleString();
             
             updateComparison(estimatedHeight);
         }
 
-        // ดักจับเหตุการณ์เมื่อมีการเลื่อน Slider
         slider.addEventListener('input', updateUI);
-
-        // รันครั้งแรกตอนเปิดหน้าเว็บ
         updateUI();
     </script>
 </body>
