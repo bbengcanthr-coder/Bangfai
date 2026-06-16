@@ -2,70 +2,66 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BangFai Dynamics | ระบบคำนวณเปรียบเทียบแรงดัน</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroDynamics Systems | เครื่องมือคำนวณ</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --border-color: #30363d;
-            --primary: #00f0ff;
-            --primary-glow: rgba(0, 240, 255, 0.2);
-            --text-main: #c9d1d9;
-            --text-muted: #8b949e;
-            --danger: #ff4b4b;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            /* บังคับใช้ฟอนต์ไม่มีหัวและจัดการช่องไฟไม่ให้ห่าง */
-            font-family: 'Prompt', sans-serif;
-            letter-spacing: 0px; 
-            word-spacing: 0px;
+            --bg-dark: #0b0f19;
+            --surface-dark: #151b2b;
+            --primary-accent: #00d2ff;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(0, 210, 255, 0.2);
         }
 
         body {
-            background-color: var(--bg-color);
+            font-family: 'Prompt', sans-serif;
+            background-color: var(--bg-dark);
             color: var(--text-main);
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 15px;
+            /* ควบคุมระยะห่างบรรทัดไม่ให้ห่างเกินไปตามที่กำหนด */
+            line-height: 1.4; 
+            letter-spacing: 0.2px;
         }
 
-        .container {
-            background-color: var(--card-bg);
+        .calculator-container {
+            background-color: var(--surface-dark);
             width: 100%;
-            max-width: 400px; /* ขนาดพอดีกับหน้าจอโทรศัพท์ */
-            border-radius: 16px;
+            max-width: 420px;
             padding: 24px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 1px solid #1e293b;
+            box-shadow: 0 0 20px var(--border-glow);
+            box-sizing: border-box;
+            margin: 16px;
         }
 
-        header {
+        .header {
             text-align: center;
             margin-bottom: 24px;
-            border-bottom: 1px solid var(--border-color);
             padding-bottom: 16px;
+            border-bottom: 1px solid #1e293b;
         }
 
-        h1 {
-            color: var(--primary);
+        .header h1 {
             font-size: 1.25rem;
             font-weight: 600;
+            color: var(--primary-accent);
+            margin: 0 0 4px 0;
             text-transform: uppercase;
-            text-shadow: 0 0 10px var(--primary-glow);
+            letter-spacing: 1px;
         }
 
-        p.subtitle {
-            font-size: 0.8rem;
+        .header p {
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin: 0;
             font-weight: 300;
         }
 
@@ -73,205 +69,173 @@
             margin-bottom: 16px;
         }
 
-        label {
+        .form-group label {
             display: block;
             font-size: 0.85rem;
-            color: var(--text-main);
+            font-weight: 500;
             margin-bottom: 6px;
-            font-weight: 400;
+            color: var(--text-muted);
         }
 
-        input, select {
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
             width: 100%;
-            background-color: #010409;
-            border: 1px solid var(--border-color);
+            background-color: #0b0f19;
+            border: 1px solid #1e293b;
             color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            outline: none;
+            padding: 10px 12px;
+            font-family: 'Prompt', sans-serif;
+            font-size: 1rem;
+            border-radius: 6px;
+            box-sizing: border-box;
             transition: all 0.3s ease;
         }
 
-        input:focus, select:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px var(--primary-glow);
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 8px var(--border-glow);
+        }
+
+        .unit {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #475569;
+            font-size: 0.85rem;
+            pointer-events: none;
         }
 
         button {
             width: 100%;
-            background-color: var(--primary);
-            color: #000;
+            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
+            color: #fff;
             border: none;
-            padding: 14px;
-            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Prompt', sans-serif;
             font-size: 1rem;
             font-weight: 600;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.2s ease;
+            margin-top: 8px;
+            transition: opacity 0.2s;
         }
 
-        button:active {
-            transform: scale(0.98);
+        button:hover {
+            opacity: 0.9;
         }
 
         .result-box {
-            margin-top: 24px;
-            background-color: #010409;
-            border-radius: 8px;
+            margin-top: 20px;
+            background-color: #0b0f19;
+            border-left: 3px solid var(--primary-accent);
             padding: 16px;
-            border-left: 3px solid var(--primary);
+            border-radius: 0 6px 6px 0;
             display: none;
         }
 
         .result-box.active {
             display: block;
-            animation: fadeIn 0.4s ease;
         }
 
-        .result-item {
-            margin-bottom: 12px;
-        }
-
-        .result-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .result-label {
-            font-size: 0.75rem;
+        .result-title {
+            font-size: 0.8rem;
             color: var(--text-muted);
+            margin-bottom: 4px;
         }
 
         .result-value {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #fff;
-        }
-
-        .highlight {
-            color: var(--danger);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 600;
+            color: var(--primary-accent);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .disclaimer {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 20px;
-            line-height: 1.4;
+        .academic-note {
+            margin-top: 24px;
+            font-size: 0.75rem;
+            color: #475569;
+            text-align: justify;
+            border-top: 1px dashed #1e293b;
+            padding-top: 12px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Ballistics Engine</h1>
-            <p class="subtitle">ระบบวิเคราะห์แรงดันประจุดินปืนเทียบเคียง</p>
-        </header>
-
-        <div class="form-group">
-            <label for="powderWeight">ปริมาณดินปืน (กรัม)</label>
-            <input type="number" id="powderWeight" placeholder="เช่น 500" inputmode="numeric">
+    <div class="calculator-container">
+        <div class="header">
+            <h1>Propulsion Calc OS</h1>
+            <p>ระบบคำนวณสมการจรวดอุดมคติ (Ideal Rocket Equation)</p>
         </div>
 
         <div class="form-group">
-            <label for="tubeDiameter">เส้นผ่านศูนย์กลางกระบอก (เซนติเมตร)</label>
-            <input type="number" id="tubeDiameter" placeholder="เช่น 5" inputmode="numeric">
+            <label for="exhaustVelocity">ความเร็วไอเสีย (Exhaust Velocity - Ve)</label>
+            <div class="input-wrapper">
+                <input type="number" id="exhaustVelocity" placeholder="เช่น 2500" step="any">
+                <span class="unit">m/s</span>
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="gunType">เลือกปืนจริงเพื่อเปรียบเทียบ</label>
-            <select id="gunType">
-                <option value="9">ปืนพก 9mm (แรงดัน ~2,400 Bar)</option>
-                <option value="556">ปืนไรเฟิล 5.56mm NATO (แรงดัน ~4,300 Bar)</option>
-                <option value="12g">ปืนลูกซอง 12 Gauge (แรงดัน ~800 Bar)</option>
-            </select>
-        </div>
-
-        <button onclick="calculatePressure()">วิเคราะห์ข้อมูล</button>
-
-        <div class="result-box" id="resultPanel">
-            <div class="result-item">
-                <div class="result-label">แรงดันประเมินจากบั้งไฟ (PSI)</div>
-                <div class="result-value" id="resPsi">0</div>
-            </div>
-            <div class="result-item">
-                <div class="result-label">เทียบเป็นบรรยากาศ (Bar)</div>
-                <div class="result-value" id="resBar">0</div>
-            </div>
-            <div class="result-item" style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 16px;">
-                <div class="result-label">อัตราส่วนเทียบกับปืนที่เลือก</div>
-                <div class="result-value highlight" id="resCompare">0%</div>
+            <label for="initialMass">มวลเริ่มต้น (Initial Mass - M0)</label>
+            <div class="input-wrapper">
+                <input type="number" id="initialMass" placeholder="น้ำหนักรวมเชื้อเพลิง" step="any">
+                <span class="unit">kg</span>
             </div>
         </div>
 
-        <div class="disclaimer">
-            *ค่าที่ได้เป็นเพียงการประเมินเชิงทฤษฎีทางฟิสิกส์ (Theoretical Physics Simulation) เพื่อใช้ประกอบการศึกษาเท่านั้น
+        <div class="form-group">
+            <label for="finalMass">มวลสุดท้าย (Final Mass - Mf)</label>
+            <div class="input-wrapper">
+                <input type="number" id="finalMass" placeholder="น้ำหนักเมื่อเชื้อเพลิงหมด" step="any">
+                <span class="unit">kg</span>
+            </div>
+        </div>
+
+        <button onclick="calculateDeltaV()">คำนวณค่า DELTA-V</button>
+
+        <div class="result-box" id="resultBox">
+            <div class="result-title">ความเร็วที่เพิ่มขึ้น (Δv):</div>
+            <div class="result-value" id="resultValue">0.00 m/s</div>
+        </div>
+
+        <div class="academic-note">
+            <strong>คำอธิบายเชิงวิชาการ:</strong> การคำนวณนี้อ้างอิงตามสมการของ Tsiolkovsky ซึ่งระบุว่าการเปลี่ยนแปลงความเร็วของยานอวกาศ (Delta-v) เป็นสัดส่วนโดยตรงกับความเร็วไอเสียที่มีผลคูณกับลอการิทึมธรรมชาติของอัตราส่วนมวลเริ่มต้นต่อมวลสุดท้าย
         </div>
     </div>
 
     <script>
-        function calculatePressure() {
-            // รับค่าจาก Input
-            const weight = parseFloat(document.getElementById('powderWeight').value);
-            const diameter = parseFloat(document.getElementById('tubeDiameter').value);
-            const gunType = document.getElementById('gunType').value;
+        function calculateDeltaV() {
+            const ve = parseFloat(document.getElementById('exhaustVelocity').value);
+            const m0 = parseFloat(document.getElementById('initialMass').value);
+            const mf = parseFloat(document.getElementById('finalMass').value);
+            const resultBox = document.getElementById('resultBox');
+            const resultValue = document.getElementById('resultValue');
 
-            // ตรวจสอบความถูกต้องของข้อมูล
-            if (!weight || !diameter || weight <= 0 || diameter <= 0) {
-                alert("กรุณากรอกข้อมูลให้ครบถ้วนและถูกต้อง");
+            // ตรวจสอบความถูกต้องของข้อมูล (Validation)
+            if (isNaN(ve) || isNaN(m0) || isNaN(mf)) {
+                alert("กรุณากรอกข้อมูลให้ครบถ้วนและเป็นตัวเลข");
+                return;
+            }
+            if (m0 <= mf) {
+                alert("มวลเริ่มต้น (M0) ต้องมากกว่ามวลสุดท้าย (Mf)");
+                return;
+            }
+            if (mf <= 0) {
+                alert("มวลสุดท้าย (Mf) ต้องมากกว่า 0");
                 return;
             }
 
-            // --- การคำนวณจำลองเชิงทฤษฎี ---
-            // รัศมี (cm)
-            const radius = diameter / 2;
-            // พื้นที่หน้าตัด (cm^2)
-            const area = Math.PI * Math.pow(radius, 2);
-            
-            // สูตรประเมินแบบจำลอง (Mock Engine): ให้ดินปืน 1 กรัมสร้างแรงโดยประมาณในพื้นที่ปิด
-            // ค่าคงที่จำลองที่ 450 (ปรับตัวเลขนี้เพื่อให้ผลลัพธ์ดูสมจริงตามทฤษฎีที่คุณต้องการได้)
-            const rawPressure = (weight * 450) / area; 
-            
-            // แรงดันในหน่วย Bar (สมมติให้ 1 หน่วยจำลอง = 1.2 Bar)
-            const pressureBar = rawPressure * 1.2;
-            // แปลง Bar เป็น PSI (1 Bar ≈ 14.5038 PSI)
-            const pressurePsi = pressureBar * 14.5038;
+            // คำนวณสมการ: Δv = ve * ln(m0 / mf)
+            const deltaV = ve * Math.log(m0 / mf);
 
-            // ค่าแรงดันอ้างอิงของปืนจริง (Bar)
-            let referenceGunBar = 0;
-            if (gunType === "9") referenceGunBar = 2400;
-            else if (gunType === "556") referenceGunBar = 4300;
-            else if (gunType === "12g") referenceGunBar = 800;
-
-            // คำนวณเปอร์เซ็นต์เทียบกับปืน
-            const percentage = (pressureBar / referenceGunBar) * 100;
-
-            // แสดงผลบนหน้าจอ
-            document.getElementById('resBar').innerText = pressureBar.toLocaleString('th-TH', {maximumFractionDigits: 2}) + ' Bar';
-            document.getElementById('resPsi').innerText = pressurePsi.toLocaleString('th-TH', {maximumFractionDigits: 2}) + ' PSI';
-            
-            const compareEl = document.getElementById('resCompare');
-            compareEl.innerText = percentage.toLocaleString('th-TH', {maximumFractionDigits: 2}) + ' %';
-            
-            // เปลี่ยนสีตัวหนังสือหากแรงดันสูงเกินไป (เกิน 100% ของปืน)
-            if (percentage > 100) {
-                compareEl.style.color = "var(--danger)";
-                compareEl.innerText += " (อันตรายวิกฤต)";
-            } else {
-                compareEl.style.color = "var(--primary)";
-            }
-
-            // แสดงกล่องผลลัพธ์
-            document.getElementById('resultPanel').classList.add('active');
+            // แสดงผล
+            resultValue.innerText = deltaV.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " m/s";
+            resultBox.classList.add('active');
         }
     </script>
 </body>
