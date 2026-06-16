@@ -3,240 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AeroDynamics Systems | เครื่องมือคำนวณ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>BangFai Dynamics | ศูนย์การเรียนรู้วิทยาศาสตร์บั้งไฟ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* ตั้งค่าพื้นฐานและการจัดระยะฟอนต์ให้พอดี */
         :root {
-            --bg-dark: #0b0f19;
-            --surface-dark: #151b2b;
-            --primary-accent: #00d2ff;
-            --text-main: #f1f5f9;
+            --primary-color: #00e5ff;
+            --bg-color: #0a0e17;
+            --card-bg: #111827;
+            --text-main: #e2e8f0;
             --text-muted: #94a3b8;
-            --border-glow: rgba(0, 210, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Prompt', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-color);
             color: var(--text-main);
-            margin: 0;
-            padding: 0;
+            line-height: 1.6;
+            letter-spacing: 0px; /* ป้องกันไม่ให้ตัวอักษรห่างกัน */
+            word-spacing: normal;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ส่วนหัวเว็บไซต์ (Header) */
+        header {
+            background-color: rgba(10, 14, 23, 0.9);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #1f2937;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            min-height: 100vh;
-            /* ควบคุมระยะห่างบรรทัดไม่ให้ห่างเกินไปตามที่กำหนด */
-            line-height: 1.4; 
-            letter-spacing: 0.2px;
         }
 
-        .calculator-container {
-            background-color: var(--surface-dark);
-            width: 100%;
-            max-width: 420px;
-            padding: 24px;
-            border-radius: 12px;
-            border: 1px solid #1e293b;
-            box-shadow: 0 0 20px var(--border-glow);
-            box-sizing: border-box;
-            margin: 16px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .header h1 {
+        .logo {
             font-size: 1.25rem;
             font-weight: 600;
-            color: var(--primary-accent);
-            margin: 0 0 4px 0;
+            color: var(--primary-color);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .header p {
-            font-size: 0.85rem;
+        /* ส่วน Hero (แบนเนอร์หลัก) */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0,229,255,0.05) 0%, rgba(10,14,23,1) 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
             color: var(--text-muted);
-            margin: 0;
+            max-width: 600px;
+            margin: 0 auto;
             font-weight: 300;
         }
 
-        .form-group {
-            margin-bottom: 16px;
+        /* โครงสร้างเนื้อหา */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: var(--text-muted);
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-wrapper input {
-            width: 100%;
-            background-color: #0b0f19;
-            border: 1px solid #1e293b;
-            color: #fff;
-            padding: 10px 12px;
-            font-family: 'Prompt', sans-serif;
-            font-size: 1rem;
-            border-radius: 6px;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        .input-wrapper input:focus {
-            outline: none;
-            border-color: var(--primary-accent);
-            box-shadow: 0 0 8px var(--border-glow);
-        }
-
-        .unit {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #475569;
-            font-size: 0.85rem;
-            pointer-events: none;
-        }
-
-        button {
-            width: 100%;
-            background: linear-gradient(90deg, #00d2ff 0%, #3a7bd5 100%);
-            color: #fff;
-            border: none;
-            padding: 12px;
-            font-family: 'Prompt', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 8px;
-            transition: opacity 0.2s;
-        }
-
-        button:hover {
-            opacity: 0.9;
-        }
-
-        .result-box {
-            margin-top: 20px;
-            background-color: #0b0f19;
-            border-left: 3px solid var(--primary-accent);
-            padding: 16px;
-            border-radius: 0 6px 6px 0;
-            display: none;
-        }
-
-        .result-box.active {
-            display: block;
-        }
-
-        .result-title {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-
-        .result-value {
+        .section-title {
             font-size: 1.5rem;
             font-weight: 600;
-            color: var(--primary-accent);
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .academic-note {
-            margin-top: 24px;
-            font-size: 0.75rem;
-            color: #475569;
-            text-align: justify;
-            border-top: 1px dashed #1e293b;
-            padding-top: 12px;
+        .section-title::before {
+            content: "";
+            display: block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* การ์ดเนื้อหา */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, 0.1);
+            border-color: #374151;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-weight: 300;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        /* ส่วนท้ายเว็บไซต์ */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #1f2937;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 2rem;
+        }
+
+        /* การรองรับหน้าจอโทรศัพท์ (Responsive) */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            header {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="calculator-container">
-        <div class="header">
-            <h1>Propulsion Calc OS</h1>
-            <p>ระบบคำนวณสมการจรวดอุดมคติ (Ideal Rocket Equation)</p>
+    <header>
+        <div class="logo">BangFai Dynamics</div>
+    </header>
+
+    <section class="hero">
+        <h1>นวัตกรรมและภูมิปัญญา</h1>
+        <p>เรียนรู้วิทยาศาสตร์การขับเคลื่อนเบื้องหลัง "บั้งไฟ" ประเพณีไทยที่ผสานหลักการทางฟิสิกส์อากาศยานอย่างลงตัว</p>
+    </section>
+
+    <div class="container">
+        
+        <h2 class="section-title">หลักการทางวิทยาศาสตร์</h2>
+        
+        <div class="card">
+            <h3>กฎการเคลื่อนที่ข้อที่ 3 ของนิวตัน</h3>
+            <p>กลไกหลักที่ทำให้บั้งไฟพุ่งทะยานขึ้นสู่ท้องฟ้าคือ "แรงกิริยาเท่ากับแรงปฏิกิริยา" (Action = Reaction) เมื่อเชื้อเพลิงภายในถูกเผาไหม้ จะเกิดก๊าซความดันสูงพ่นออกมาทางท้ายท่อ (แรงกิริยา) ส่งผลให้ตัวบั้งไฟถูกผลักไปในทิศทางตรงกันข้าม (แรงปฏิกิริยา) ยิ่งก๊าซพ่นออกมาเร็วและมีมวลมาก บั้งไฟก็จะยิ่งมีแรงขับเคลื่อนสูง</p>
         </div>
 
-        <div class="form-group">
-            <label for="exhaustVelocity">ความเร็วไอเสีย (Exhaust Velocity - Ve)</label>
-            <div class="input-wrapper">
-                <input type="number" id="exhaustVelocity" placeholder="เช่น 2500" step="any">
-                <span class="unit">m/s</span>
-            </div>
+        <div class="card">
+            <h3>หลักอากาศพลศาสตร์ (Aerodynamics)</h3>
+            <p>การออกแบบรูปร่างของบั้งไฟมีความสำคัญอย่างมากต่อความเสถียรในอากาศ การทำให้ส่วนหัวมีความเพรียวลมจะช่วยลดแรงต้านอากาศ (Drag) ในขณะที่ "หาง" ของบั้งไฟทำหน้าที่เสมือนหางเสือ ช่วยรักษาศูนย์ถ่วงและทิศทางไม่ให้แกว่งไปมาระหว่างที่พุ่งด้วยความเร็วสูง</p>
         </div>
 
-        <div class="form-group">
-            <label for="initialMass">มวลเริ่มต้น (Initial Mass - M0)</label>
-            <div class="input-wrapper">
-                <input type="number" id="initialMass" placeholder="น้ำหนักรวมเชื้อเพลิง" step="any">
-                <span class="unit">kg</span>
-            </div>
+        <h2 class="section-title">ภูมิปัญญาและโครงสร้าง</h2>
+
+        <div class="card">
+            <h3>ส่วนประกอบพื้นฐาน</h3>
+            <p>แม้จะไม่มีระบบคอมพิวเตอร์ช่วยคำนวณ แต่ภูมิปัญญาดั้งเดิมได้ออกแบบองค์ประกอบที่สมบูรณ์แบบ:</p>
+            <ul style="list-style-position: inside; color: var(--text-muted); font-weight: 300;">
+                <li style="margin-bottom: 0.5rem;"><strong>เลาบั้งไฟ:</strong> ทรงกระบอกที่ทนแรงดันสูง มักทำจากไม้ไผ่พลาสติกพีวีซี หรือเหล็กในปัจจุบัน</li>
+                <li style="margin-bottom: 0.5rem;"><strong>เชื้อเพลิง (หมื่อ):</strong> ส่วนผสมดั้งเดิมที่ให้พลังงานในการขับเคลื่อน</li>
+                <li><strong>หาง:</strong> ไม้ไผ่ยาวที่ช่วยรักษาสมดุลขณะเคลื่อนที่</li>
+            </ul>
         </div>
 
-        <div class="form-group">
-            <label for="finalMass">มวลสุดท้าย (Final Mass - Mf)</label>
-            <div class="input-wrapper">
-                <input type="number" id="finalMass" placeholder="น้ำหนักเมื่อเชื้อเพลิงหมด" step="any">
-                <span class="unit">kg</span>
-            </div>
-        </div>
-
-        <button onclick="calculateDeltaV()">คำนวณค่า DELTA-V</button>
-
-        <div class="result-box" id="resultBox">
-            <div class="result-title">ความเร็วที่เพิ่มขึ้น (Δv):</div>
-            <div class="result-value" id="resultValue">0.00 m/s</div>
-        </div>
-
-        <div class="academic-note">
-            <strong>คำอธิบายเชิงวิชาการ:</strong> การคำนวณนี้อ้างอิงตามสมการของ Tsiolkovsky ซึ่งระบุว่าการเปลี่ยนแปลงความเร็วของยานอวกาศ (Delta-v) เป็นสัดส่วนโดยตรงกับความเร็วไอเสียที่มีผลคูณกับลอการิทึมธรรมชาติของอัตราส่วนมวลเริ่มต้นต่อมวลสุดท้าย
-        </div>
     </div>
 
-    <script>
-        function calculateDeltaV() {
-            const ve = parseFloat(document.getElementById('exhaustVelocity').value);
-            const m0 = parseFloat(document.getElementById('initialMass').value);
-            const mf = parseFloat(document.getElementById('finalMass').value);
-            const resultBox = document.getElementById('resultBox');
-            const resultValue = document.getElementById('resultValue');
+    <footer>
+        &copy; 2026 BangFai Dynamics. โครงการเพื่อการศึกษาวิทยาศาสตร์และศิลปวัฒนธรรม.
+    </footer>
 
-            // ตรวจสอบความถูกต้องของข้อมูล (Validation)
-            if (isNaN(ve) || isNaN(m0) || isNaN(mf)) {
-                alert("กรุณากรอกข้อมูลให้ครบถ้วนและเป็นตัวเลข");
-                return;
-            }
-            if (m0 <= mf) {
-                alert("มวลเริ่มต้น (M0) ต้องมากกว่ามวลสุดท้าย (Mf)");
-                return;
-            }
-            if (mf <= 0) {
-                alert("มวลสุดท้าย (Mf) ต้องมากกว่า 0");
-                return;
-            }
-
-            // คำนวณสมการ: Δv = ve * ln(m0 / mf)
-            const deltaV = ve * Math.log(m0 / mf);
-
-            // แสดงผล
-            resultValue.innerText = deltaV.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " m/s";
-            resultBox.classList.add('active');
-        }
-    </script>
 </body>
 </html>
